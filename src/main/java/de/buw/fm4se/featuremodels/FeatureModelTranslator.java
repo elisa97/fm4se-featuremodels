@@ -116,6 +116,18 @@ public class FeatureModelTranslator {
     return "(" + s + ")";
   }
 
+  /* A function to generate permutation for XOR relationship, 
+    given list of children.
+    Input: list of children [a, b]
+    Output: a string representing the XOR relationship, [ a & !b | !a & b ] 
+  
+    For 3 or more inputs, the XOR gate has a value of 1 
+    when there is an odd number of 1’s in the inputs, 
+    otherwise, it is a 0. A list of binary representations are generated
+    but only ones with odd number of 1s are kept. 
+    Then we add a negation sign (!) based on the 1 value, 
+    i.e (01) will transform (ab) to (a & !b).
+  */
   private static String xorPermGenerator(List<String> children) {
     int n = (int) Math.pow(2, children.size());
     List<String> oddCombi = new ArrayList<>();
