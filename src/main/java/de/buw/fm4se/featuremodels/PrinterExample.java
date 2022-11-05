@@ -14,6 +14,8 @@ public class PrinterExample {
   public static void main(String[] args) {
     FeatureModel fm = ExampleFmCreator.getSimpleFm();
     System.out.println(printFeatureModel(fm));
+    // System.out.println(printTranslator(fm));
+    // System.out.println(printTranslator(ExampleFmCreator.getBadFm()));
   }
 
   /**
@@ -54,8 +56,8 @@ public class PrinterExample {
    */
   private static String printChildInfo(Feature f, String indent) {
     String s = " and has " + f.getChildren().size() + " children";
-    if (!GroupKind.NONE.equals(f.getChildGroupKind())) {
-      s += " in a " + f.getChildGroupKind() + "-group";
+    if (!GroupKind.NONE.equals(f.getChildGroupKind())) { // if the child nodes' kind is NOT None
+      s += " in a " + f.getChildGroupKind() + "-group"; // print the group kind
     }
     for (Feature c : f.getChildren()) {
       s += "\n" + indent + printFeature(c, indent);
@@ -63,4 +65,9 @@ public class PrinterExample {
     return s;
   }
 
+  private static String printTranslator(FeatureModel fm) {
+    String s = FeatureModelTranslator.translateToFormula(fm);
+
+    return s;
+  }
 }
