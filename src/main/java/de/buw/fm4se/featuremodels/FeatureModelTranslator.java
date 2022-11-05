@@ -75,7 +75,7 @@ public class FeatureModelTranslator {
         s += c + " | ";
       }
       // remove the last |
-      s = s.substring(0, s.length() - 3);
+      s = wrapInBracket(s.substring(0, s.length() - 3));
     } else {
       s += wrapInBracket(xorPermGenerator(children));
     }
