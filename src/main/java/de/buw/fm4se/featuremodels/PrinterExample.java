@@ -68,8 +68,8 @@ public class PrinterExample {
 
   private static String printTranslator(FeatureModel fm) {
     String s = FeatureModelTranslator.translateToFormula(fm);
-    List<String> d = FeatureModelAnalyzer.deadFeatureNames(fm);
-    // System.out.print(d);
+    List<String> d = FeatureModelAnalyzer.mandatoryFeatureNames(fm);
+    System.out.print(d);
     return s;
   }
 }

@@ -55,26 +55,13 @@ public class FeatureModelAnalyzer {
   public static List<String> mandatoryFeatureNames(FeatureModel fm) {
     List<String> mandatoryFeatures = new ArrayList<>();
     List<String> listFeatures = new ArrayList<>();
-    listFeatures = getFeatures(fm.getRoot(), listFeatures);
-
-    String formula = FeatureModelTranslator.translateToFormula(fm);
-    String result = "";
-
-    for (String f : listFeatures) {
-      try {
-        result = LimbooleExecutor.runLimboole(formula + " & !" + f, true);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      if (result.contains("UNSATISFIABLE")) {
-        mandatoryFeatures.add(f);
-      }
-    }
-
+    listFeatures.add(fm.getRoot().getName());
+    mandatoryFeatures = getMandatoryFeatures(fm.getRoot(), listFeatures, fm);
+    // System.out.println(mandatoryFeatures);
     return mandatoryFeatures;
   }
 
-  private static List<String> getFeatures(Feature f, List<String>l) {
+  private static List<String> getFeatures(Feature f, List<String> l) {
     String parent = f.getName();
     l.add(parent);
     for (Feature child : f.getChildren()) {
@@ -82,4 +69,22 @@ public class FeatureModelAnalyzer {
     }
     return l;
   }
+  
+  private static List<String> getMandatoryFeatures(Feature f, List<String> queue, FeatureModel fm) {
+    // queue.add(f.getName());
+    String parent = f.getName();
+    // queue.add(parent);
+
+    for (Feature child : f.getChildren()) {
+      if (child.isMandatory() & f.isMandatory()) {
+        queue.add(child.getName());
+      }
+      else if(child.isMandatory() & parent.equals(fm.getRoot().getName())) {
+        queue.add(child.getName());
+      }
+      queue = getMandatoryFeatures(child, queue, fm);
+    }
+    return queue;
+  }
+  
 }
