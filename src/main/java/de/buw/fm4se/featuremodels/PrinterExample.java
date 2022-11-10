@@ -5,6 +5,7 @@ import de.buw.fm4se.featuremodels.fm.Feature;
 import de.buw.fm4se.featuremodels.fm.FeatureModel;
 import de.buw.fm4se.featuremodels.fm.GroupKind;
 
+import java.util.List;
 /**
  * Example code that recursively prints feature models.
  *
@@ -15,7 +16,7 @@ public class PrinterExample {
     FeatureModel fm = ExampleFmCreator.getSimpleFm();
     System.out.println(printFeatureModel(fm));
     // System.out.println(printTranslator(fm));
-    // System.out.println(printTranslator(ExampleFmCreator.getBadFm()));
+    // System.out.println(printTranslator(ExampleFmCreator.getTestFm()));
   }
 
   /**
@@ -67,7 +68,8 @@ public class PrinterExample {
 
   private static String printTranslator(FeatureModel fm) {
     String s = FeatureModelTranslator.translateToFormula(fm);
-
+    List<String> d = FeatureModelAnalyzer.deadFeatureNames(fm);
+    // System.out.print(d);
     return s;
   }
 }

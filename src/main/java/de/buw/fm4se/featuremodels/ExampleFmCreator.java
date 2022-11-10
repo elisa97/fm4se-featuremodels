@@ -56,4 +56,20 @@ public class ExampleFmCreator {
     return m;
   }
 
+  public static FeatureModel getTestFm() {
+    FeatureModel m = new FeatureModel();
+
+    Feature car = new Feature("car");
+    m.setRoot(car);
+
+    Feature motor = car.addChild("motor", true);
+    Feature comfort = car.addChild("comfort", false);
+    comfort.setChildGroupKind(GroupKind.XOR);
+    Feature heating = comfort.addChild("heating", false);
+    comfort.addChild("entertainment", false);
+
+    m.addConstraint(new CrossTreeConstraint(motor, CrossTreeConstraint.Kind.REQUIRES, heating));
+
+    return m;
+  }
 }
